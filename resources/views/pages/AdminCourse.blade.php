@@ -101,65 +101,32 @@
     <div id="page-wrapper">
         <div class="container-fluid">
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Select Courses Or Modules </h1>
-                </div>
+            <h1 class="page-header" >Questions Under The Course : <?php echo $course_name ?></h1>
 
-                <form class="" action="/" method="post" >
-                    {{csrf_field()}}
-                    <div class="input-group custom-search-form">
-                    <select class="form-control" name="coursename"  >
-                        <!--<option selected disabled>Route ID</option>-->
-                        @foreach($courses as $course)
-                            {{--<option value="{{$departure->route_id}}">--}}
-                            <option>
-                                {{$course->course_name}}
-                            </option>
-                        @endforeach
-                    </select>
-                    <span class="input-group-btn">
-                    <input type="submit"  name="search" value="Select"  class="btn btn-primary">
-                    </span>
-                    </div>
-                </form>
+            @foreach($questions as $question)
+                <form class="" role="form" action="/QAdmin" method="post">
+                    <?php
+                    $q_id=$question->question_id;
+                    $q_title=$question->question_title;
+                    $q_content=$question->content;
+                    $q_status=$question->status
+                    ?>
 
-            </div>
-            <h1 class="page-header">User Control</h1>
-            <table>
-                <tr><td width="150px"><h3>User ID</h3></td><td width="150px"><h3>User Name</h3></td><td width="150px"><h3>Options</h3></td> </tr>
+                    <h4><?php echo $q_title ?></h4>
+                    <p><?php echo $q_content ?></p>
 
-
-                @foreach($users as $users)
-                    <form class="" role="form" action="/activate" method="post">
-                        <!--            --><?php
-
-                        $u_name=$users->UserName;
-                        $u_status=$users->status;
-                        $u_id=$users->UserID;
-                        ?>
-                        <input type="hidden" class="form-control" name="u_id" value="{{$users->UserID}}">
-                        <input type="hidden" class="form-control" name="u_status" value="{{$users->status}}">
-                        <tr><td><h4><?php echo $u_id ?></h4></td>
-                            <td><h4><?php echo $u_name ?></h4></td>
-
-                            @if ($u_status=="a")
-                                {{csrf_field()}}
-                                <td> <button type="submit" class="btn btn-success">Suspend</button></td></tr>
-
-                        @else
+                    @if ($q_status=="a")
                             {{csrf_field()}}
-                            <td><button type="submit" class="btn btn-success">Activate</button></td></tr>
-                        @endif
+                            <td> <button type="submit" class="btn btn-success">Block</button></td></tr>
+
+                    @else
+                        {{csrf_field()}}
+                        <td><button type="submit" class="btn btn-success">Activate</button></td></tr>
+                    @endif
 
 
-                    </form>
-                @endforeach
-
-
-            </table>
-
-
+                </form>
+        @endforeach
             <!-- ... Your content goes here ... -->
 
         </div>

@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('pages.Login');
 });
-Route::get('/admin', function () {
-    return view('pages.AdminUC');
-});
+Route::get('/admin', 'UserController@adminUserControl');
+Route::post('/activate','UserController@activation');
+
+Route::post('/','UserController@getQuestionPage');
